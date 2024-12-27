@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./../style.css";
+
+// 音声ファイルをインポート
+import cardDrawSound from "./draw_card_sound.mp3"; 
+import startSound from "./start.mp3"; // ゲーム開始音
 
 const INITIAL_DECK = createDeck();
 
@@ -20,10 +24,18 @@ function App() {
 }
 
 function StartScreen({ onStart }) {
+  // ゲーム開始音を再生
+  const playStartSound = () => {
+    const audio = new Audio(startSound); // インポートしたゲーム開始音を再生
+    audio.play();
+  };
+
   return (
     <div className="start-screen">
       <h1>Blackjack</h1>
-      <button className="play-button" onClick={onStart}>Play</button>
+      <button className="play-button" onClick={() => { playStartSound(); onStart(); }}>
+        Play
+      </button>
     </div>
   );
 }
@@ -35,6 +47,12 @@ function GameScreen({ initialDeck }) {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(""); // スコア表示用
   const [winner, setWinner] = useState(""); // WIN! 表示用
+
+  // 音声ファイルを再生
+  const playCardDrawSound = () => {
+    const audio = new Audio(cardDrawSound); // インポートした音声を再生
+    audio.play();
+  };
 
   const checkBust = () => {
     const playerScore = calculateHandValue(playerHand);
@@ -58,6 +76,7 @@ function GameScreen({ initialDeck }) {
   const hit = () => {
     const newDeck = [...deck];
     const newCard = newDeck.pop();
+    playCardDrawSound();
     setPlayerHand([...playerHand, newCard]);
     setDeck(newDeck);
     
@@ -73,6 +92,7 @@ function GameScreen({ initialDeck }) {
     let dealerScore = calculateHandValue(dealerHand);
     let newDealerHand = [...dealerHand];
     let newDeck = [...deck];
+    playCardDrawSound();
 
     // ディーラーが17以上になるまでカードを引く
     while (dealerScore < 17) {
