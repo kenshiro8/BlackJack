@@ -12,7 +12,6 @@ body {
   align-items: center;
   height: 100vh;
   background: radial-gradient(circle, green, black);
-  border: 10px solid black;
   box-shadow: 0 0 20px black;
   position: relative;
 }
@@ -51,69 +50,72 @@ body {
   overflow: hidden;
 }
 
-.chips-display {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 1.5rem;
-  font-family: 'Cinzel', serif;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 5px 10px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px black;
-}
-
 .table {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-.player-hand, .dealer-hand {
+.dealer-hand, .player-hand {
   position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   gap: 10px;
+  font-family: 'Cinzel', serif;
+}
+
+.dealer-hand {
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.player-hand {
+  top: 65%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.card-container {
+  position: relative;
+}
+
+.card-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  position: absolute;
+  bottom: -20px; /* カードの下に合計値を表示 */
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .controls {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   position: absolute;
-  top: 50%;
+  top: 80%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
   justify-content: center;
   align-items: center;
 }
 
 .controls button {
-  padding: 20px 40px;
+  padding: 15px 30px;
   font-size: 2rem;
   background-color: #f7cb09;
   border: 3px solid;
   border-radius: 10px;
-  box-shadow: 0 0 10px black;
+  box-shadow: 0 0 1px black;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Cinzel', serif;
 }
 
 .controls button:hover {
   background-color: #c19e06;
   box-shadow: 0 0 30px black;
-}
-
-.pot-display {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.5rem;
-  color: white;
 }
 
 .card {
@@ -145,4 +147,31 @@ body {
   position: absolute;
   bottom: 5px;
   right: 5px;
+}
+
+.score-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.score-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.win-tag {
+  font-size: 2rem;
+  color: gold;
+  font-weight: bold;
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
 }
