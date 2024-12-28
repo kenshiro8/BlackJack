@@ -60,17 +60,6 @@ function GameScreen({ initialDeck }) {
     }
   };
 
-  const dealCards = () => {
-    const newDeck = [...deck];
-    const playerCards = [newDeck.pop(), newDeck.pop()];
-    const dealerCards = [newDeck.pop(), newDeck.pop()];
-    
-    setPlayerHand(playerCards);
-    setDealerHand(dealerCards);
-    setDeck(newDeck);
-    checkBust();
-  };
-
   const hit = () => {
     const newDeck = [...deck];
     const newCard = newDeck.pop();
