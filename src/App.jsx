@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./../style.css";
 
-// 音声ファイルをインポート
+
 import cardDrawSound from "./draw_card_sound.mp3"; 
-import startSound from "./start.mp3"; // ゲーム開始音
+import startSound from "./start.mp3";
 
 const INITIAL_DECK = createDeck();
 
@@ -24,9 +24,8 @@ function App() {
 }
 
 function StartScreen({ onStart }) {
-  // ゲーム開始音を再生
   const playStartSound = () => {
-    const audio = new Audio(startSound); // インポートしたゲーム開始音を再生
+    const audio = new Audio(startSound);
     audio.play();
   };
 
@@ -45,20 +44,19 @@ function GameScreen({ initialDeck }) {
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
   const [gameOver, setGameOver] = useState(false);
-  const [score, setScore] = useState(""); // スコア表示用
-  const [winner, setWinner] = useState(""); // WIN! 表示用
+  const [score, setScore] = useState("");
+  const [winner, setWinner] = useState("");
 
-  // 音声ファイルを再生
   const playCardDrawSound = () => {
-    const audio = new Audio(cardDrawSound); // インポートした音声を再生
+    const audio = new Audio(cardDrawSound);
     audio.play();
   };
 
   const checkBust = () => {
     const playerScore = calculateHandValue(playerHand);
     if (playerScore > 21) {
-      setScore("Bust!"); // プレイヤーがバストした場合
-      setGameOver(true); // ゲーム終了
+      setScore("Bust!");
+      setGameOver(true);
     }
   };
 
@@ -70,7 +68,7 @@ function GameScreen({ initialDeck }) {
     setPlayerHand(playerCards);
     setDealerHand(dealerCards);
     setDeck(newDeck);
-    checkBust(); // 最初のカード配布後にバストチェック
+    checkBust();
   };
 
   const hit = () => {
@@ -80,11 +78,10 @@ function GameScreen({ initialDeck }) {
     setPlayerHand([...playerHand, newCard]);
     setDeck(newDeck);
     
-    // 合計が21を超えた場合にBustを表示
     const playerScore = calculateHandValue([...playerHand, newCard]);
     if (playerScore > 21) {
-      setScore("Bust!"); // プレイヤーがバストした場合
-      setGameOver(true); // ゲーム終了
+      setScore("Bust!");
+      setGameOver(true);
     }
   };
 
@@ -94,66 +91,61 @@ function GameScreen({ initialDeck }) {
     let newDeck = [...deck];
     playCardDrawSound();
 
-    // ディーラーが17以上になるまでカードを引く
     while (dealerScore < 17) {
       const newCard = newDeck.pop();
       newDealerHand.push(newCard);
       dealerScore = calculateHandValue(newDealerHand);
       setDeck(newDeck);
-      setDealerHand(newDealerHand); // 手札を更新
+      setDealerHand(newDealerHand);
     }
 
-    // 両者のスコアが21以下の場合、スコアの大きい方に「WIN!」表示
     const playerScore = calculateHandValue(playerHand);
     if (dealerScore > 21) {
-      setScore(`Bust! - ${playerScore}`); // ディーラーがバストした場合、プレイヤーのスコアを表示
-      setWinner("Player"); // プレイヤーの勝ち
+      setScore(`Bust! - ${playerScore}`);
+      setWinner("Player");
     } else {
-      setScore(`${dealerScore} - ${playerScore}`); // 中央にスコア表示
+      setScore(`${dealerScore} - ${playerScore}`);
       if (dealerScore > playerScore) {
-        setWinner("Dealer"); // ディーラーが勝ち
+        setWinner("Dealer");
       } else if (playerScore > dealerScore) {
-        setWinner("Player"); // プレイヤーが勝ち
+        setWinner("Player");
       } else {
-        setWinner("Tie"); // 引き分け
+        setWinner("Tie");
       }
     }
 
-    setGameOver(true); // ゲームを終了
+    setGameOver(true);
   };
 
-  // 手札の合計値を計算
   const calculateHandValue = (hand) => {
     let value = 0;
     let aceCount = 0;
 
     hand.forEach(card => {
       value += getCardValue(card);
-      if (card.rank === 'A') aceCount++; // Aの枚数をカウント
+      if (card.rank === 'A') aceCount++;
     });
 
-    // Aを11とカウントしてもバーストしない場合、11に設定
     while (value > 21 && aceCount) {
-      value -= 10; // バーストする場合、Aを1として再計算
+      value -= 10;
       aceCount--;
     }
 
     return value;
   };
 
-  // カードの値を取得
   const getCardValue = (card) => {
     if (['J', 'Q', 'K'].includes(card.rank)) {
-      return 10; // J, Q, Kは10としてカウント
+      return 10;
     } else if (card.rank === 'A') {
-      return 11; // Aは初期で11としてカウント
+      return 11;
     } else {
-      return parseInt(card.rank); // 数字カードはそのまま値を返す
+      return parseInt(card.rank);
     }
   };
 
   const handlePlayAgain = () => {
-    window.location.reload(); // ページをリロードしてゲームを初期化
+    window.location.reload();
   };
 
   return (
@@ -180,7 +172,6 @@ function GameScreen({ initialDeck }) {
           {winner === "Player" && <div className="win-tag">WIN!</div>}
         </div>
       </div>
-      {/* スコアを画面中央に表示 */}
       {score && (
         <div className="score-display">
           <div className="score-label">Dealer Hand - Player Hand</div>

@@ -84,7 +84,7 @@ body {
   font-weight: bold;
   color: white;
   position: absolute;
-  bottom: -20px; /* カードの下に合計値を表示 */
+  bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
 }
